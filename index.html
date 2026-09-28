@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Wallpaper Maker</title>
+        <style>
+        body{font-family: sans-serif; text-align: center; background: #eee;}
+        #myPhone{width: 270px; height: 540px; margin: 20px auto; border: 8px solid black;
+                        border-radius: 36px; position: relative; overflow: hidden;}
+        #myOrb{position: absolute; left: 50%; top: 30%; transform: translate(-50%, -50%);
+                        width: 150px; height: 150px; border-radius: 50%;
+                        background: white; opacity: 0.5; filter: blur(20px);}
+        #myWords{position: absolute; width: 100%; top: 60%; transform: translateY(-50%);}
+        label{display: inline-block; margin: 6px 10px;}
+        </style>
+</head>
+<body>
+        <h1>Wallpaper Maker</h1>
+
+        <div id="myPhone">
+                <div id="myOrb"></div>
+                <div id="myWords">Hello</div>
+        </div>
+
+        <div>
+                <button onclick="preset('#ff9a9e', '#fad0c4')">Peach</button>
+                <button onclick="preset('#4facfe', '#00f2fe')">Ocean</button>
+                <button onclick="preset('#232526', '#7b4397')">Night</button>
+                <button onclick="preset('#a8e063', '#56ab2f')">Forest</button>
+        </div>
+
+        <label>Color 1 <input type="color" id="myColor1" value="#ff9a9e"></label>
+        <label>Color 2 <input type="color" id="myColor2" value="#fad0c4"></label>
+        <label>Angle <input type="range" id="myAngle" min="0" max="360" value="135"></label>
+        <br>
+        <label>Orb size <input type="range" id="myOrbSize" min="0" max="300" value="150"></label>
+        <br>
+        <label>Text <input type="text" id="myInput" value="Hello"></label>
+        <label>Text size <input type="range" id="myWordSize" min="16" max="80" value="40"></label>
+        <label>Text color <input type="color" id="myWordColor" value="#ffffff"></label>
+        <label>Font
+                <select id="myFont">
+                        <option value="sans-serif">Sans</option>
+                        <option value="serif">Serif</option>
+                        <option value="monospace">Mono</option>
+                        <option value="cursive">Cursive</option>
+                </select>
+        </label>
+
+        <script>
+                function draw(){
+                        myPhone.style.background = "linear-gradient(" + myAngle.value + "deg, "
+                                + myColor1.value + ", " + myColor2.value + ")";
+
+                        myOrb.style.width = myOrbSize.value + "px";
+                        myOrb.style.height = myOrbSize.value + "px";
+
+                        myWords.innerHTML = myInput.value;
+                        myWords.style.fontSize = myWordSize.value + "px";
+                        myWords.style.color = myWordColor.value;
+                        myWords.style.fontFamily = myFont.value;
+                }
+
+                // when any control changes, draw again
+                var controls = document.querySelectorAll("input, select");
+                for (var i = 0; i < controls.length; i++){
+                        controls[i].oninput = draw;
+                }
+
+                // preset buttons set both colors at once
+                function preset(a, b){
+                        myColor1.value = a;
+                        myColor2.value = b;
+                        draw();
+                }
+
+                draw();
+        </script>
+</body>
+</html>
